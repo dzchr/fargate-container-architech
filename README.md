@@ -1,4 +1,4 @@
-![Diagrama_Final](https://github.com/user-attachments/assets/4d7c6877-5faa-4882-b87a-6d6620314955)![Diagrama_Final](https://github.com/user-attachments/assets/4d7c6877-5faa-4882-b87a-6d6620314955)## Fargate Container Architech
+## Fargate Container Architech
 
 Este proyecto implementa una arquitectura basada en contenedores sobre **Amazon ECS con Fargate**, como parte de una **prueba de concepto (POC)** para modernizar la infraestructura de una aplicación crítica en la nube. Se trata de una simulación realista del sistema de pagos digitales del *Banco Etheria*, desarrollado en el contexto académico del curso **Diseño de Soluciones de Infraestructura (DIY7121)**.
 
