@@ -22,40 +22,40 @@ La solución considera buenas prácticas del **AWS Well-Architected Framework**,
 La imagen Docker fue construida automáticamente desde GitHub Actions y subida a Amazon ECR (`dz-banco`) con cada commit a `main`.
 
 # Ejemplo local (automatizado desde Actions)
-docker build -t dz-banco .
-docker tag dz-banco:latest <ECR-URL>/dz-banco:latest
-docker push <ECR-URL>/dz-banco:latest
+- docker build -t dz-banco .
+- docker tag dz-banco:latest <ECR-URL>/dz-banco:latest
+- docker push <ECR-URL>/dz-banco:latest
 
 ### 2. 🤖 Automatización con GitHub Actions
 Se configuró un pipeline en .github/workflows/docker-push.yml con autenticación temporal vía Secrets:
 
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_SESSION_TOKEN
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_SESSION_TOKEN
 
 El flujo permite ejecución manual (workflow_dispatch) o automática por push.
 
 ### 3. ☁️ Despliegue en Amazon ECS Fargate
 Se creó el cluster dz-cluster
 
-Task definition dz-task con integración a:
-ECR (imagen)
-EFS (punto de acceso)
-Puerto 80 expuesto
-Se creó el servicio dz-service vinculado a ALB (dz-alb)
-Health checks configurados sobre /
+- Task definition dz-task con integración a:
+- ECR (imagen)
+- EFS (punto de acceso)
+- Puerto 80 expuesto
+- Se creó el servicio dz-service vinculado a ALB (dz-alb)
+- Health checks configurados sobre /
 
 ### 4. 📂 Integración con Amazon EFS
 
-EFS: dz-efs con Mount Targets y Access Point /data
-Montado en /mnt/efs dentro del contenedor
-UID/GID: 1000, permisos 0777
+- EFS: dz-efs con Mount Targets y Access Point /data
+- Montado en /mnt/efs dentro del contenedor
+- UID/GID: 1000, permisos 0777
 
 ### 5. 🔐 Configuración de Seguridad
 
-dz-sg-alb: permite HTTP desde internet
-dz-sg-task: permite solo tráfico desde dz-sg-alb
-dz-sg-efs: permite NFS (2049) solo desde dz-sg-task
+- dz-sg-alb: permite HTTP desde internet
+- dz-sg-task: permite solo tráfico desde dz-sg-alb
+- dz-sg-efs: permite NFS (2049) solo desde dz-sg-task
 
 ### 6. 🌍 Validación final
 La aplicación fue accedida exitosamente desde navegador vía DNS del ALB, mostrando:
@@ -75,11 +75,11 @@ fargate-container-architech/
 
 ## 📋 Requisitos
 
-☁️ Cuenta activa en AWS con permisos sobre ECS, ECR, ALB, EFS
-🐙 Repositorio GitHub con Actions habilitado
-🔑 Secrets AWS válidos (temporales o permanentes)
-🌍 Navegador con acceso a la URL pública del ALB
-🐳 Docker Engine (si deseas pruebas locales)
+- ☁️ Cuenta activa en AWS con permisos sobre ECS, ECR, ALB, EFS
+- 🐙 Repositorio GitHub con Actions habilitado
+- 🔑 Secrets AWS válidos (temporales o permanentes)
+ -🌍 Navegador con acceso a la URL pública del ALB
+ -🐳 Docker Engine (si deseas pruebas locales)
 
 ## 📌 Repositorio de Implementación
 
@@ -88,6 +88,6 @@ fargate-container-architech/
 ## 🎓 Autor
 
 ### Christopher Cabrera González
-📧 chr.cabrera@duocuc.cl
-📘 Duoc UC – Ingeniería en Infraestructura y Plataformas Tecnológicas
-🧪 Evaluación 3 – Asignatura: Diseño de Soluciones de Infraestructura (DIY7121)
+- 📧 chr.cabrera@duocuc.cl
+- 📘 Duoc UC – Ingeniería en Infraestructura y Plataformas Tecnológicas
+- 🧪 Evaluación 3 – Asignatura: Diseño de Soluciones de Infraestructura (DIY7121)
