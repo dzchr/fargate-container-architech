@@ -1,92 +1,93 @@
-## Fargate Container Architech
+## 🚀 Arquitectura Serverless Fargate - Banco Etheria (POC)
 
-Este proyecto implementa una arquitectura basada en contenedores sobre **Amazon ECS con Fargate**, como parte de una **prueba de concepto (POC)** para modernizar la infraestructura de una aplicación crítica en la nube. Se trata de una simulación realista del sistema de pagos digitales del *Banco Etheria*, desarrollado en el contexto académico del curso **Diseño de Soluciones de Infraestructura (DIY7121)**.
+Este proyecto contiene una arquitectura funcional basada en Amazon ECS con Fargate, construida para simular una aplicación web bancaria. La infraestructura se despliega mediante servicios nativos de AWS con una imagen Docker personalizada, almacenamiento persistente (EFS), balanceador de carga (ALB), y automatización CI/CD con GitHub Actions.
 
 La solución considera buenas prácticas del **AWS Well-Architected Framework**, incluyendo alta disponibilidad, seguridad, automatización CI/CD y observabilidad.
 
----
+## 📦 Características principales
 
-## 🧱 Arquitectura implementada
-
-La arquitectura incluye:
-
-- **ECS Fargate** para ejecución de contenedores serverless
-- **Application Load Balancer** (ALB) con health checks
-- **Amazon RDS Multi-AZ** (simulado)
-- **Amazon ECR** como repositorio de imágenes Docker
-- **AWS WAF** (a nivel conceptual)
-- **CloudWatch Logs** para monitoreo
-- **GitHub Actions** para pipeline CI (build + push a ECR)
+🛳️ Despliegue sin servidores con Amazon ECS Fargate  
+📂 Almacenamiento persistente vía Amazon EFS  
+🌀 Balanceo de tráfico HTTP con Application Load Balancer  
+🐳 Imagen Docker personalizada subida a Amazon ECR  
+🔁 CI/CD automatizado con GitHub Actions  
+🔐 Seguridad segmentada por SGs (ALB, ECS, EFS)  
+🌐 Aplicación web accesible vía navegador (DNS del ALB)
 
 ![Diagrama_Final](https://github.com/user-attachments/assets/368e7b4a-2438-41a5-be4f-8cf83ca4f29c)
 
+## 🛠️ Pasos para construir e implementar
 
----
+### 1. ⚙️ Construcción de la imagen y push a ECR
+La imagen Docker fue construida automáticamente desde GitHub Actions y subida a Amazon ECR (`dz-banco`) con cada commit a `main`.
 
-## 🚀 Tecnologías utilizadas
+# Ejemplo local (automatizado desde Actions)
+docker build -t dz-banco .
+docker tag dz-banco:latest <ECR-URL>/dz-banco:latest
+docker push <ECR-URL>/dz-banco:latest
 
-- Docker
-- AWS ECS (Fargate)
-- Amazon ECR
-- Application Load Balancer
-- CloudWatch
-- GitHub Actions
-- IAM & Security Groups
-
----
-
-## 📁 Estructura del repositorio
-
-fargate-container-architech/
-├── Dockerfile
-├── .github/
-│ └── workflows/
-│ └── push-to-ecr.yml
-├── screenshots/
-│ ├── diagrama-arquitectura.jpg
-│ ├── alb-access.png
-│ ├── cloudwatch-logs.png
-├── README.md
-
----
-
-## 🔄 CI/CD con GitHub Actions
-
-El flujo automático de integración continua se activa al hacer `push` al branch `main`. El proceso:
-
-1. Construye la imagen Docker local.
-2. Inicia sesión en Amazon ECR.
-3. Etiqueta y sube la imagen al repositorio correspondiente.
-
-# Ver archivo: .github/workflows/push-to-ecr.yml
-Se utilizan variables temporales (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN) definidas como secretos de GitHub.
-
-🧪 Instrucciones de uso (POC)
-
-Clonar el repositorio:
-git clone https://github.com/tuusuario/fargate-container-architech.git
-cd fargate-container-architech
-
-Crear el repositorio ECR en AWS:
-aws ecr create-repository --repository-name balance-service
-
-Crear los secretos temporales en GitHub (Settings > Secrets and variables > Actions):
+### 2. 🤖 Automatización con GitHub Actions
+Se configuró un pipeline en .github/workflows/docker-push.yml con autenticación temporal vía Secrets:
 
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_SESSION_TOKEN
 
-Hacer push al branch main y verificar en ECR:
-git add .
-git commit -m "initial commit"
-git push origin main
+El flujo permite ejecución manual (workflow_dispatch) o automática por push.
 
-🖼️ Capturas de implementación
+### 3. ☁️ Despliegue en Amazon ECS Fargate
+Se creó el cluster dz-cluster
 
- DNS del Load Balancer accedido vía navegador
- Logs del contenedor en CloudWatch
- ECS Service activo y saludable
- Imagen en Amazon ECR con tag latest
+Task definition dz-task con integración a:
+ECR (imagen)
+EFS (punto de acceso)
+Puerto 80 expuesto
+Se creó el servicio dz-service vinculado a ALB (dz-alb)
+Health checks configurados sobre /
 
-📘 Créditos
-Desarrollado por Christopher Cabrera
+### 4. 📂 Integración con Amazon EFS
+
+EFS: dz-efs con Mount Targets y Access Point /data
+Montado en /mnt/efs dentro del contenedor
+UID/GID: 1000, permisos 0777
+
+### 5. 🔐 Configuración de Seguridad
+
+dz-sg-alb: permite HTTP desde internet
+dz-sg-task: permite solo tráfico desde dz-sg-alb
+dz-sg-efs: permite NFS (2049) solo desde dz-sg-task
+
+### 6. 🌍 Validación final
+La aplicación fue accedida exitosamente desde navegador vía DNS del ALB, mostrando:
+[dz-alb-1845898649.us-east-1.elb.amazonaws.com](http://dz-alb-1845898649.us-east-1.elb.amazonaws.com/)
+
+Bienvenido a tu Banco
+Saldo actual: $10.000
+
+## 📁 Estructura del repositorio
+
+fargate-container-architech/
+    ├── Dockerfile
+    ├── README.md
+    └── .git/
+    └── .github/
+    └── ´Diagrama de Arquitectura Banco.jgp´
+
+## 📋 Requisitos
+
+☁️ Cuenta activa en AWS con permisos sobre ECS, ECR, ALB, EFS
+🐙 Repositorio GitHub con Actions habilitado
+🔑 Secrets AWS válidos (temporales o permanentes)
+🌍 Navegador con acceso a la URL pública del ALB
+🐳 Docker Engine (si deseas pruebas locales)
+
+## 📌 Repositorio de Implementación
+
+🔗 https://github.com/dzchr/fargate-container-architech
+
+## 🎓 Autor
+
+### Christopher Cabrera González
+📧 chr.cabrera@duocuc.cl
+📘 Duoc UC – Ingeniería en Infraestructura y Plataformas Tecnológicas
+🧪 Evaluación 3 – Asignatura: Diseño de Soluciones de Infraestructura (DIY7121)
