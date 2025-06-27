@@ -7,19 +7,15 @@ La solución considera buenas prácticas del **AWS Well-Architected Framework**,
 ## 📦 Características principales
 Esta arquitectura POC incorpora los siguientes componentes y prácticas clave inspiradas en un entorno real:
 
-🐳 ECS Fargate para ejecución serverless de contenedores (sin administración de servidores).
-📦 Amazon ECR para alojamiento de la imagen Docker personalizada.
-⚙️ GitHub Actions como pipeline CI/CD para automatización del build y push de imágenes.
-📁 Amazon EFS como sistema de almacenamiento persistente y compartido entre tareas.
-🌐 ALB (Application Load Balancer) para balanceo de tráfico HTTP y acceso externo.
-🔐 Security Groups segmentados, siguiendo el principio de menor privilegio (ALB, ECS, EFS).
-📊 Observabilidad activa con registros en CloudWatch Logs (task definition con log driver).
-🧪 Validación de servicio vía DNS del ALB, accesible desde cualquier navegador.
-🧱 Preparado para escalar, integrando patrones del AWS Well-Architected Framework:
- - Alta disponibilidad
- - Seguridad
- - Automatización
- - Observabilidad
+- 🐳 ECS Fargate para ejecución serverless de contenedores (sin administración de servidores).
+- 📦 Amazon ECR para alojamiento de la imagen Docker personalizada.
+- ⚙️ GitHub Actions como pipeline CI/CD para automatización del build y push de imágenes.
+- 📁 Amazon EFS como sistema de almacenamiento persistente y compartido entre tareas.
+- 🌐 ALB (Application Load Balancer) para balanceo de tráfico HTTP y acceso externo.
+- 🔐 Security Groups segmentados, siguiendo el principio de menor privilegio (ALB, ECS, EFS).
+- 📊 Observabilidad activa con registros en CloudWatch Logs (task definition con log driver).
+- 🧪 Validación de servicio vía DNS del ALB, accesible desde cualquier navegador.
+- 🧱 Preparado para escalar, integrando patrones del AWS Well-Architected Framework: Alta disponibilidad, Seguridad, Automatización y Observabilidad.
 
 ![Diagrama_Final](https://github.com/user-attachments/assets/368e7b4a-2438-41a5-be4f-8cf83ca4f29c)
 
