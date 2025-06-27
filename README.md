@@ -1,4 +1,4 @@
-## 🚀 Arquitectura Serverless Fargate - Banco Etheria (POC)
+# 🚀 Arquitectura Serverless Fargate - Banco Etheria (POC)
 
 Este proyecto contiene una arquitectura funcional basada en Amazon ECS con Fargate, construida para simular una aplicación web bancaria. La infraestructura se despliega mediante servicios nativos de AWS con una imagen Docker personalizada, almacenamiento persistente (EFS), balanceador de carga (ALB), y automatización CI/CD con GitHub Actions.
 
@@ -24,7 +24,7 @@ Esta arquitectura POC incorpora los siguientes componentes y prácticas clave in
 ### 1. ⚙️ Construcción de la imagen y push a ECR
 La imagen Docker fue construida automáticamente desde GitHub Actions y subida a Amazon ECR (`dz-banco`) con cada commit a `main`.
 
-# Ejemplo local (automatizado desde Actions)
+### Ejemplo local (automatizado desde Actions)
 - docker build -t dz-banco .
 - docker tag dz-banco:latest <ECR-URL>/dz-banco:latest
 - docker push <ECR-URL>/dz-banco:latest
