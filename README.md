@@ -5,14 +5,21 @@ Este proyecto contiene una arquitectura funcional basada en Amazon ECS con Farga
 La solución considera buenas prácticas del **AWS Well-Architected Framework**, incluyendo alta disponibilidad, seguridad, automatización CI/CD y observabilidad.
 
 ## 📦 Características principales
+Esta arquitectura POC incorpora los siguientes componentes y prácticas clave inspiradas en un entorno real:
 
-🛳️ Despliegue sin servidores con Amazon ECS Fargate  
-📂 Almacenamiento persistente vía Amazon EFS  
-🌀 Balanceo de tráfico HTTP con Application Load Balancer  
-🐳 Imagen Docker personalizada subida a Amazon ECR  
-🔁 CI/CD automatizado con GitHub Actions  
-🔐 Seguridad segmentada por SGs (ALB, ECS, EFS)  
-🌐 Aplicación web accesible vía navegador (DNS del ALB)
+🐳 ECS Fargate para ejecución serverless de contenedores (sin administración de servidores).
+📦 Amazon ECR para alojamiento de la imagen Docker personalizada.
+⚙️ GitHub Actions como pipeline CI/CD para automatización del build y push de imágenes.
+📁 Amazon EFS como sistema de almacenamiento persistente y compartido entre tareas.
+🌐 ALB (Application Load Balancer) para balanceo de tráfico HTTP y acceso externo.
+🔐 Security Groups segmentados, siguiendo el principio de menor privilegio (ALB, ECS, EFS).
+📊 Observabilidad activa con registros en CloudWatch Logs (task definition con log driver).
+🧪 Validación de servicio vía DNS del ALB, accesible desde cualquier navegador.
+🧱 Preparado para escalar, integrando patrones del AWS Well-Architected Framework:
+ - Alta disponibilidad
+ - Seguridad
+ - Automatización
+ - Observabilidad
 
 ![Diagrama_Final](https://github.com/user-attachments/assets/368e7b4a-2438-41a5-be4f-8cf83ca4f29c)
 
