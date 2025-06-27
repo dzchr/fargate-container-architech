@@ -59,19 +59,17 @@ Se creó el cluster dz-cluster
 
 ### 6. 🌍 Validación final
 La aplicación fue accedida exitosamente desde navegador vía DNS del ALB, mostrando:
-[dz-alb-1845898649.us-east-1.elb.amazonaws.com](http://dz-alb-1845898649.us-east-1.elb.amazonaws.com/)
-
-Bienvenido a tu Banco
-Saldo actual: $10.000
+### [dz-alb-1845898649.us-east-1.elb.amazonaws.com](http://dz-alb-1845898649.us-east-1.elb.amazonaws.com/)
 
 ## 📁 Estructura del repositorio
-
+<pre>
 fargate-container-architech/
     ├── Dockerfile
     ├── README.md
     └── .git/
     └── .github/
     └── ´Diagrama de Arquitectura Banco.jgp´
+</pre>
 
 ## 📋 Requisitos
 
@@ -83,7 +81,7 @@ fargate-container-architech/
 
 ## 📌 Repositorio de Implementación
 
-🔗 https://github.com/dzchr/fargate-container-architech
+### 🔗 https://github.com/dzchr/fargate-container-architech
 
 ## 🎓 Autor
 
